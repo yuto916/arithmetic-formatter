@@ -8,7 +8,6 @@ def arithmetic_arranger(problems, show_answers=False):
     NUM_OF_SPACES_BETWEEN_PROBLEMS = 4
     SEPARATING_SYMBOL = "-"
     
-
     # Variables
     num_of_problems = 0
     list_of_operand1 = []
@@ -20,13 +19,11 @@ def arithmetic_arranger(problems, show_answers=False):
     formatted_string_answer = ""
     formatted_string_separator = ""
 
-
     # Error Messages
     TOO_MANY_PROBLEMS = f"ERROR: Too many problems. You can add maximum of {MAX_NUM_OF_PROBLEMS} problems."
     INVALID_OPERATOR = "ERROR: Operator must be '+' or '-'."
     NON_NUMERIC_OPERAND = "ERROR: Numbers must only contain digits."
     EXCEEDING_DIGIT_LIMIT = f"ERROR: Numbers cannot be more than {MAX_NUM_OF_DIGITS} digits."
-    
 
     # Determine # of problems
     num_of_problems = len(problems)
@@ -38,7 +35,6 @@ def arithmetic_arranger(problems, show_answers=False):
         list_of_operand1.append(components[0])
         list_of_operand2.append(components[2])
         list_of_problem_operators.append(components[1])
-
 
     # ------------------------- Validation -------------------------
     # Input Validation: # of problems
@@ -69,21 +65,30 @@ def arithmetic_arranger(problems, show_answers=False):
         length_of_bigger_operand = (max([len(list_of_operand1[i]), len(list_of_operand2[i])]))
         # Append the length
         list_of_highest_num_of_digits.append(length_of_bigger_operand)
+        # Determine the answer of each problem
+        if list_of_problem_operators[i] == "+":
+            problem_answer = int(list_of_operand1[i]) + int(list_of_operand2[i])
+        elif list_of_problem_operators[i] == "-":
+            problem_answer = int(list_of_operand1[i]) - int(list_of_operand2[i])
+        # Determine the length of each problem
+        len_of_problem = list_of_highest_num_of_digits[i] + NUM_OF_SPACES_TOP_EXCL_OPERAND_SPACE
         # Determine how many spaces are needed for formatting from the left
         num_of_spaces_top = (list_of_highest_num_of_digits[i] - len(list_of_operand1[i])) + NUM_OF_SPACES_TOP_EXCL_OPERAND_SPACE
         num_of_spaces_bottom = (list_of_highest_num_of_digits[i] - len(list_of_operand2[i])) + NUM_OF_SPACES_BOTTOM_EXCL_OPERAND_SPACE
+        num_of_spaces_answer = len_of_problem - len(str(problem_answer))
         # Format each line
-        formatted_string_top += (f"{" " * num_of_spaces_top}{list_of_operand1[i]}{" " * NUM_OF_SPACES_BETWEEN_PROBLEMS}")
-        formatted_string_bottom += (f"{list_of_problem_operators[i]}{" " * num_of_spaces_bottom}{list_of_operand2[i]}{" " * NUM_OF_SPACES_BETWEEN_PROBLEMS}")
-        formatted_string_separator += (f"{SEPARATING_SYMBOL * (list_of_highest_num_of_digits[i] + NUM_OF_SPACES_TOP_EXCL_OPERAND_SPACE)}{" " * (NUM_OF_SPACES_BETWEEN_PROBLEMS)}")
-
+        formatted_string_top += f"{' ' * num_of_spaces_top}{list_of_operand1[i]}{' ' * NUM_OF_SPACES_BETWEEN_PROBLEMS}"
+        formatted_string_bottom += f"{list_of_problem_operators[i]}{' ' * num_of_spaces_bottom}{list_of_operand2[i]}{' ' * NUM_OF_SPACES_BETWEEN_PROBLEMS}"
+        formatted_string_separator += f"{SEPARATING_SYMBOL * len_of_problem}{' ' * (NUM_OF_SPACES_BETWEEN_PROBLEMS)}"
+        formatted_string_answer += f"{' ' * num_of_spaces_answer}{problem_answer}{' ' * (NUM_OF_SPACES_BETWEEN_PROBLEMS)}"
 
     # Return the formatted problems
-    return(f"{formatted_string_top}\n{formatted_string_bottom}\n{formatted_string_separator}")
+    if show_answers == True:
+        return(f"{formatted_string_top}\n{formatted_string_bottom}\n{formatted_string_separator}\n{formatted_string_answer}")
+    else:
+        return(f"{formatted_string_top}\n{formatted_string_bottom}\n{formatted_string_separator}")
 
   
     
-
-
-print(arithmetic_arranger(["32 - 698", "3801 - 2", "45 + 43", "123 + 49", "45 + 43"]))
+print(arithmetic_arranger(["35 + 730", "3801 - 5", "45 + 87", "123 + 51"], True))
 
