@@ -3,6 +3,7 @@
 
 ## Description
 This program formats a set of arithmetic problems into a structured output. It ensures the input follows specific rules and returns meaningful error messages when the formatting is incorrect.
+Additionally, there is an option to show answers.
 
 
 ## Formatting Rules
@@ -37,6 +38,7 @@ The function returns errors in the following cases:
 
 
 ## Example Output
+### Without Answers
 Input:
   ```
   arithmetic_arranger(["35 + 730", "3801 - 5", "45 + 87", "123 + 51"])
@@ -46,4 +48,17 @@ Output:
      35      3801      45      123
   + 730    -    5    + 87    +  51
   -----    ------    ----    -----
+  ```
+
+### With Answers
+Input:
+  ```
+  arithmetic_arranger(["35 + 730", "3801 - 5", "45 + 87", "123 + 51"], True)
+  ```
+Output:
+  ```
+     35      3801      45      123
+  + 730    -    5    + 87    +  51
+  -----    ------    ----    -----
+    765      3796     132      174
   ```
